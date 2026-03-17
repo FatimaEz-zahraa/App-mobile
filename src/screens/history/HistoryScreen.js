@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { colors, spacing, typography } from '../../theme';
 
 const mockRuns = [
     { id: '1', date: '2026-03-08', duration: '00:45:00', distance: '8.5' },
@@ -16,7 +17,7 @@ export default function HistoryScreen({ navigation }) {
             <Text style={styles.date}>{item.date}</Text>
             <View style={styles.detailsRow}>
                 <Text>Distance: {item.distance} km</Text>
-                <Text>Temps: {item.duration}</Text>
+                <Text>Time: {item.duration}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -34,18 +35,18 @@ export default function HistoryScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#f5f5f5' },
+    container: { flex: 1, backgroundColor: colors.background },
     card: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        marginBottom: 15,
+        backgroundColor: colors.surface,
+        padding: spacing.large,
+        borderRadius: 16,
+        marginBottom: spacing.medium,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
-        shadowRadius: 1.41,
-        elevation: 2,
+        shadowRadius: 8,
+        elevation: 4,
     },
-    date: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-    detailsRow: { flexDirection: 'row', justifyContent: 'space-between' }
+    date: { ...typography.subtitle, color: colors.text, marginBottom: 10 },
+    detailsRow: { flexDirection: 'row', justifyContent: 'space-between' },
 });

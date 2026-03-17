@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import { colors, spacing, typography } from '../../theme';
 
 export default function RunDetailsScreen({ route, navigation }) {
     const { runId } = route.params;
@@ -8,7 +9,7 @@ export default function RunDetailsScreen({ route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Détails de la course #{runId}</Text>
+            <Text style={styles.title}>Run Details #{runId}</Text>
 
             <View style={styles.card}>
                 <Text style={styles.label}>Date : <Text style={styles.value}>2026-03-08</Text></Text>
@@ -19,28 +20,28 @@ export default function RunDetailsScreen({ route, navigation }) {
             </View>
 
             <View style={[styles.card, { height: 200, justifyContent: 'center', alignItems: 'center' }]}>
-                <Text style={{ color: '#888' }}>Carte du parcours avec le tracé GPS</Text>
+                <Text style={{ color: '#888' }}>Route map with GPS trace</Text>
             </View>
 
-            <Button title="Retour" onPress={() => navigation.goBack()} />
+            <Button title="Back" onPress={() => navigation.goBack()} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: '#f5f5f5' },
-    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+    container: { flex: 1, padding: spacing.large, backgroundColor: colors.background },
+    title: { ...typography.heading, color: colors.text, marginBottom: spacing.large, textAlign: 'center' },
     card: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        marginBottom: 20,
+        backgroundColor: colors.surface,
+        padding: spacing.large,
+        borderRadius: 16,
+        marginBottom: spacing.large,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
-        shadowRadius: 1.41,
-        elevation: 2,
+        shadowRadius: 8,
+        elevation: 4,
     },
-    label: { fontSize: 16, marginBottom: 10, color: '#555' },
-    value: { fontWeight: 'bold', color: '#000' }
+    label: { ...typography.body, marginBottom: 10, color: colors.muted },
+    value: { ...typography.subtitle, fontWeight: '700', color: colors.text },
 });

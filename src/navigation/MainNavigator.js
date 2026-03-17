@@ -1,30 +1,54 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MaterialIcons } from '@expo/vector-icons';
 
-import StartRunScreen from '../screens/run/StartRunScreen';
+import StartRunScreen from '../screens/run/StartRunScreen.js';
 import StatsScreen from '../screens/stats/StatsScreen';
 import HistoryScreen from '../screens/history/HistoryScreen';
 import RunDetailsScreen from '../screens/history/RunDetailsScreen';
+import { colors } from '../theme';
 
 const Tab = createBottomTabNavigator();
 const HistoryStack = createNativeStackNavigator();
 
 function HistoryNavigator() {
     return (
-        <HistoryStack.Navigator>
-            <HistoryStack.Screen name="HistoryList" component={HistoryScreen} options={{ title: 'Historique' }} />
-            <HistoryStack.Screen name="RunDetails" component={RunDetailsScreen} options={{ title: 'Détails de la course' }} />
+        <HistoryStack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: colors.surface },
+                headerTintColor: colors.text,
+                contentStyle: { backgroundColor: colors.background },
+            }}
+        >
+            <HistoryStack.Screen name="HistoryList" component={HistoryScreen} options={{ title: 'History' }} />
+            <HistoryStack.Screen name="RunDetails" component={RunDetailsScreen} options={{ title: 'Run Details' }} />
         </HistoryStack.Navigator>
     );
 }
 
 export default function MainNavigator() {
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name="Run" component={StartRunScreen} options={{ title: 'Course' }} />
-            <Tab.Screen name="Stats" component={StatsScreen} options={{ title: 'Statistiques' }} />
-            <Tab.Screen name="History" component={HistoryNavigator} options={{ title: 'Historique' }} />
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                headerStyle: { backgroundColor: colors.surface },
+                headerTintColor: colors.text,
+                tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+                tabBarActiveTintColor: colors.primary,
+                tabBarInactiveTintColor: colors.muted,
+                tabBarIcon: ({ color, size }) => {
+                    const icons = {
+                        StartRun: 'directions-run',
+                        Stats: 'show-chart',
+                        History: 'history',
+                    };
+                    return <MaterialIcons name={icons[route.name]} size={size} color={color} />;
+                },
+            })}
+        >
+            <Tab.Screen name="StartRun" component={StartRunScreen} options={{ title: 'Run' }} />
+            <Tab.Screen name="Stats" component={StatsScreen} options={{ title: 'Stats' }} />
+            <Tab.Screen name="History" component={HistoryNavigator} options={{ title: 'History' }} />
         </Tab.Navigator>
     );
 }
