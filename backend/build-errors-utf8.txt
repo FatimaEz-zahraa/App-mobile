@@ -1,0 +1,759 @@
+﻿
+> run-wus-b@0.0.1 build
+> nest build
+
+node.exe : [96mauth.se
+rvice.ts[0m:[93m11[0
+m:[93m31[0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module '../prisma/
+prisma.service' or its 
+corresponding type 
+declarations.
+Au caractère Ligne:1 : 
+1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpeci    
+fied: ([96mauth.    
+servi...e declara    
+tions.:String) []    , 
+RemoteException
+    + FullyQualifiedE  
+  rrorId : NativeCo    
+mmandError
+ 
+
+[7m11[0m import { 
+PrismaService } from '.
+./prisma/prisma.service
+';
+[7m  [0m [91m       
+                       
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~[0m
+[96mauth.service.ts[0
+m:[93m12[0m:[93m29[
+0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module 
+'./dto/register.dto' 
+or its corresponding 
+type declarations.
+
+[7m12[0m import { 
+RegisterDto } from 
+'./dto/register.dto';
+[7m  [0m [91m       
+                     ~~
+~~~~~~~~~~~~~~~~~~[0m
+[96mauth.service.ts[0
+m:[93m13[0m:[93m26[
+0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module 
+'./dto/login.dto' or 
+its corresponding type 
+declarations.
+
+[7m13[0m import { 
+LoginDto } from 
+'./dto/login.dto';
+[7m  [0m [91m       
+                  
+~~~~~~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m31[0m:
+[93m40[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m31[0m     const 
+existing = await this.p
+risma.user.findFirst({
+[7m  [0m [91m       
+                       
+         ~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m52[0m:
+[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m52[0m     const 
+user = await this.prism
+a.user.create({
+[7m  [0m [91m       
+                       
+     ~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m85[0m:
+[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m85[0m     const 
+user = await this.prism
+a.user.findFirst({
+[7m  [0m [91m       
+                       
+     ~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m130[0m
+:[93m43[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m130[0m     const 
+storedToken = await thi
+s.prisma.refreshToken.f
+indUnique({
+[7m   [0m [91m      
+                       
+             
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m141[0m
+:[93m25[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m141[0m       
+await this.prisma.refre
+shToken.delete({ 
+where: { id: 
+storedToken.id } });
+[7m   [0m [91m      
+                  
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m150[0m
+:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m150[0m     await t
+his.prisma.refreshToken
+.delete({ where: { id: 
+storedToken.id } });
+[7m   [0m [91m      
+                
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m166[0m
+:[93m25[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m166[0m       
+await this.prisma.refre
+shToken.deleteMany({
+[7m   [0m [91m      
+                  
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m171[0m
+:[93m25[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m171[0m       
+await this.prisma.refre
+shToken.deleteMany({ 
+where: { userId } });
+[7m   [0m [91m      
+                  
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m196[0m
+:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m196[0m     await t
+his.prisma.refreshToken
+.create({
+[7m   [0m [91m      
+                
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m215[0m
+:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m215[0m     await t
+his.prisma.refreshToken
+.deleteMany({
+[7m   [0m [91m      
+                
+~~~~~~~~~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m226[0m
+:[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m226[0m     const 
+user = await this.prism
+a.user.findUnique({
+[7m   [0m [91m      
+                       
+      ~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m243[0m
+:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m243[0m     await t
+his.prisma.user.update(
+{
+[7m   [0m [91m      
+                
+~~~~[0m
+[96msrc/auth/auth.serv
+ice.ts[0m:[93m249[0m
+:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'refreshToken' does 
+not exist on type 
+'PrismaService'.
+
+[7m249[0m     await t
+his.prisma.refreshToken
+.deleteMany({ where: { 
+userId } });
+[7m   [0m [91m      
+                
+~~~~~~~~~~~~[0m
+[96msrc/prisma/prisma.
+service.ts[0m:[93m2[
+0m:[93m10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has 
+no exported member 
+'PrismaClient'.
+
+[7m2[0m import { 
+PrismaClient } from 
+'@prisma/client';
+[7m [0m [91m        
+ ~~~~~~~~~~~~[0m
+[96msrc/prisma/prisma.
+service.ts[0m:[93m7[
+0m:[93m16[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$connect' does not 
+exist on type 
+'PrismaService'.
+
+[7m7[0m     await 
+this.$connect();
+[7m [0m [91m        
+       ~~~~~~~~[0m
+[96msrc/prisma/prisma.
+service.ts[0m:[93m11
+[0m:[93m16[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'$disconnect' does not 
+exist on type 
+'PrismaService'.
+
+[7m11[0m     await 
+this.$disconnect();
+[7m  [0m [91m       
+        ~~~~~~~~~~~[0m
+[96msrc/users/dto/phys
+ical-profile.dto.ts[0m
+:[93m1[0m:[93m10[0m
+ - [91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has 
+no exported member 
+'Gender'.
+
+[7m1[0m import { 
+Gender, FitnessLevel } 
+from '@prisma/client';
+[7m [0m [91m        
+ ~~~~~~[0m
+[96msrc/users/dto/phys
+ical-profile.dto.ts[0m
+:[93m1[0m:[93m18[0m
+ - [91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has 
+no exported member 
+'FitnessLevel'.
+
+[7m1[0m import { 
+Gender, FitnessLevel } 
+from '@prisma/client';
+[7m [0m [91m        
+         
+~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m16[0
+m:[93m10[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has 
+no exported member 
+'Prisma'.
+
+[7m16[0m import { 
+Prisma } from 
+'@prisma/client';
+[7m  [0m [91m       
+  ~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m41[0
+m:[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m41[0m     const 
+user = await this.prism
+a.user.findUnique({
+[7m  [0m [91m       
+                       
+     ~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m61[0
+m:[93m36[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m61[0m     const 
+user = await this.prism
+a.user.update({
+[7m  [0m [91m       
+                       
+     ~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m76[0
+m:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'user' does not exist 
+on type 
+'PrismaService'.
+
+[7m76[0m     await th
+is.prisma.user.delete({
+ where: { id: userId } 
+});
+[7m  [0m [91m       
+               ~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m83[0
+m:[93m39[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userPhysicalProfile' 
+does not exist on type 
+'PrismaService'.
+
+[7m83[0m     const 
+profile = await this.pr
+isma.userPhysicalProfil
+e.findUnique({
+[7m  [0m [91m       
+                       
+        
+~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m114[
+0m:[93m39[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userPhysicalProfile' 
+does not exist on type 
+'PrismaService'.
+
+[7m114[0m     const 
+profile = await this.pr
+isma.userPhysicalProfil
+e.upsert({
+[7m   [0m [91m      
+                       
+         
+~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m148[
+0m:[93m23[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userMeasurement' does 
+not exist on type 
+'PrismaService'.
+
+[7m148[0m     await t
+his.prisma.userMeasurem
+ent.create({
+[7m   [0m [91m      
+                
+~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m170[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userMeasurement' does 
+not exist on type 
+'PrismaService'.
+
+[7m170[0m       this.
+prisma.userMeasurement.
+findMany({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m176[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userMeasurement' does 
+not exist on type 
+'PrismaService'.
+
+[7m176[0m       this.
+prisma.userMeasurement.
+count({ where: { 
+userId } }),
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m189[
+0m:[93m41[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userPhysicalProfile' 
+does not exist on type 
+'PrismaService'.
+
+[7m189[0m       
+const profile = await t
+his.prisma.userPhysical
+Profile.findUnique({
+[7m   [0m [91m      
+                       
+           
+~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m198[
+0m:[93m43[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userMeasurement' does 
+not exist on type 
+'PrismaService'.
+
+[7m198[0m     const 
+measurement = await thi
+s.prisma.userMeasuremen
+t.create({
+[7m   [0m [91m      
+                       
+             
+~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m212[
+0m:[93m25[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userPhysicalProfile' 
+does not exist on type 
+'PrismaService'.
+
+Found 47 error(s).
+
+[7m212[0m       
+await this.prisma.userP
+hysicalProfile.updateMa
+ny({
+[7m   [0m [91m      
+                  
+~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m243[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m243[0m       this.
+prisma.runningSession.c
+ount({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m246[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m246[0m       this.
+prisma.runningSession.c
+ount({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m249[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m249[0m       this.
+prisma.runningSession.c
+ount({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m254[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'workoutLog' does not 
+exist on type 
+'PrismaService'.
+
+[7m254[0m       this.
+prisma.workoutLog.count
+({ where: { userId } 
+}),
+[7m   [0m [91m      
+            
+~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m255[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'workoutLog' does not 
+exist on type 
+'PrismaService'.
+
+[7m255[0m       this.
+prisma.workoutLog.count
+({
+[7m   [0m [91m      
+            
+~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m260[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m260[0m       this.
+prisma.runningSession.f
+indFirst({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m273[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m273[0m       this.
+prisma.runningSession.a
+ggregate({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m279[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'runningSession' does 
+not exist on type 
+'PrismaService'.
+
+[7m279[0m       this.
+prisma.runningSession.a
+ggregate({
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~[0m
+[96msrc/users/users.se
+rvice.ts[0m:[93m285[
+0m:[93m19[0m - 
+[91merror[0m[90m 
+TS2339: [0mProperty 
+'userAchievement' does 
+not exist on type 
+'PrismaService'.
+
+[7m285[0m       this.
+prisma.userAchievement.
+count({ where: { 
+userId } }),
+[7m   [0m [91m      
+            
+~~~~~~~~~~~~~~~[0m
+[96musers.service.ts[
+0m:[93m9[0m:[93m31[
+0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module '../prisma/
+prisma.service' or its 
+corresponding type 
+declarations.
+
+[7m9[0m import { 
+PrismaService } from '.
+./prisma/prisma.service
+';
+[7m [0m [91m        
+                      ~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~[0m
+[96musers.service.ts[
+0m:[93m10[0m:[93m34
+[0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module './dto/upda
+te-profile.dto' or its 
+corresponding type 
+declarations.
+
+[7m10[0m import { 
+UpdateProfileDto } 
+from './dto/update-prof
+ile.dto';
+[7m  [0m [91m       
+                       
+   ~~~~~~~~~~~~~~~~~~~~
+~~~~~~[0m
+[96musers.service.ts[
+0m:[93m14[0m:[93m8[
+0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module './dto/phys
+ical-profile.dto' or 
+its corresponding type 
+declarations.
+
+[7m14[0m } from './dt
+o/physical-profile.dto'
+;
+[7m  [0m [91m       
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~[0m
+[96musers.service.ts[
+0m:[93m15[0m:[93m38
+[0m - 
+[91merror[0m[90m 
+TS2307: [0mCannot 
+find module './dto/meas
+urement.dto' or its 
+corresponding type 
+declarations.
+
+[7m15[0m import { 
+CreateMeasurementDto } 
+from './dto/measurement
+.dto';
+[7m  [0m [91m       
+                       
+       ~~~~~~~~~~~~~~~~
+~~~~~~~[0m
+[96musers.service.ts[
+0m:[93m16[0m:[93m10
+[0m - 
+[91merror[0m[90m 
+TS2305: [0mModule 
+'"@prisma/client"' has 
+no exported member 
+'Prisma'.
+
+[7m16[0m import { 
+Prisma } from 
+'@prisma/client';
+[7m  [0m [91m       
+  ~~~~~~[0m
+

@@ -1,0 +1,39 @@
+﻿src/auth/auth.service.ts(31,40): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(52,36): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(85,36): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(130,43): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(141,25): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(150,23): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(166,25): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(171,25): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(196,23): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(215,23): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(226,36): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(243,23): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/auth/auth.service.ts(249,23): error TS2339: Property 'refreshToken' does not exist on type 'PrismaService'.
+src/prisma/prisma.service.ts(2,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/prisma/prisma.service.ts(7,16): error TS2339: Property '$connect' does not exist on type 'PrismaService'.
+src/prisma/prisma.service.ts(11,16): error TS2339: Property '$disconnect' does not exist on type 'PrismaService'.
+src/users/dto/physical-profile.dto.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'Gender'.
+src/users/dto/physical-profile.dto.ts(1,18): error TS2305: Module '"@prisma/client"' has no exported member 'FitnessLevel'.
+src/users/users.service.ts(16,10): error TS2305: Module '"@prisma/client"' has no exported member 'Prisma'.
+src/users/users.service.ts(41,36): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/users/users.service.ts(61,36): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/users/users.service.ts(76,23): error TS2339: Property 'user' does not exist on type 'PrismaService'.
+src/users/users.service.ts(83,39): error TS2339: Property 'userPhysicalProfile' does not exist on type 'PrismaService'.
+src/users/users.service.ts(114,39): error TS2339: Property 'userPhysicalProfile' does not exist on type 'PrismaService'.
+src/users/users.service.ts(148,23): error TS2339: Property 'userMeasurement' does not exist on type 'PrismaService'.
+src/users/users.service.ts(170,19): error TS2339: Property 'userMeasurement' does not exist on type 'PrismaService'.
+src/users/users.service.ts(176,19): error TS2339: Property 'userMeasurement' does not exist on type 'PrismaService'.
+src/users/users.service.ts(189,41): error TS2339: Property 'userPhysicalProfile' does not exist on type 'PrismaService'.
+src/users/users.service.ts(198,43): error TS2339: Property 'userMeasurement' does not exist on type 'PrismaService'.
+src/users/users.service.ts(212,25): error TS2339: Property 'userPhysicalProfile' does not exist on type 'PrismaService'.
+src/users/users.service.ts(243,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(246,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(249,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(254,19): error TS2339: Property 'workoutLog' does not exist on type 'PrismaService'.
+src/users/users.service.ts(255,19): error TS2339: Property 'workoutLog' does not exist on type 'PrismaService'.
+src/users/users.service.ts(260,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(273,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(279,19): error TS2339: Property 'runningSession' does not exist on type 'PrismaService'.
+src/users/users.service.ts(285,19): error TS2339: Property 'userAchievement' does not exist on type 'PrismaService'.
