@@ -16,6 +16,7 @@ function HistoryNavigator() {
     return (
         <HistoryStack.Navigator
             screenOptions={{
+                headerShown: false,
                 headerStyle: { backgroundColor: colors.surface },
                 headerTintColor: colors.text,
                 contentStyle: { backgroundColor: colors.background },
@@ -31,6 +32,7 @@ export default function MainNavigator() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
+                headerShown: false,
                 headerStyle: { backgroundColor: colors.surface },
                 headerTintColor: colors.text,
                 tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },

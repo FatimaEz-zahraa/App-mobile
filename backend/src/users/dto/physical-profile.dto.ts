@@ -1,4 +1,4 @@
-import { Gender, FitnessLevel } from '../../generated/prisma';
+import { Gender, FitnessLevel } from '@prisma/client';
 
 export class CreatePhysicalProfileDto {
   birthDate!: Date | string;

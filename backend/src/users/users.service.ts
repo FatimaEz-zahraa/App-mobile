@@ -13,7 +13,7 @@ import {
   UpdatePhysicalProfileDto,
 } from './dto/physical-profile.dto';
 import { CreateMeasurementDto } from './dto/measurement.dto';
-import { Prisma } from '../generated/prisma';
+import { Prisma } from '@prisma/client';
 
 // Sélection sécurisée (sans passwordHash)
 const SAFE_USER_SELECT = {

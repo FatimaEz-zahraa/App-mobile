@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { AppState } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
+import * as Speech from 'expo-speech';
 import { useAuth } from './AuthContext';
 import {
     flushQueuedLocations,
@@ -17,10 +18,27 @@ export function TrackingProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [lastRunSummary, setLastRunSummary] = useState(null);
+    const [isPaused, setIsPaused] = useState(false);
+    const [lastVoiceMilestone, setLastVoiceMilestone] = useState(0);
 
     async function refreshTrackingState() {
         const snapshot = await getTrackingSnapshot();
+        
+        // Auto-pause logic
+        if (snapshot?.isTracking && !isPaused && snapshot.currentSpeedKmh < 0.5) {
+            // Potential auto-pause? Maybe too sensitive, check for 5 seconds stay
+        }
+
         setTrackingState(snapshot);
+
+        // Voice coaching every 1km
+        if (snapshot?.isTracking && snapshot.distanceMeters >= (lastVoiceMilestone + 1000)) {
+            const km = Math.floor(snapshot.distanceMeters / 1000);
+            const pace = Math.floor(snapshot.avgPaceSecPerKm / 60) + " minutes " + (snapshot.avgPaceSecPerKm % 60) + " secondes";
+            Speech.speak(`${km} kilomètre atteint. Allure moyenne : ${pace} par kilomètre.`);
+            setLastVoiceMilestone(km * 1000);
+        }
+
         return snapshot;
     }
 

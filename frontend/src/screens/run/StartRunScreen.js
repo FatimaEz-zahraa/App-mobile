@@ -7,7 +7,10 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import MapView, { Polyline, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Polyline, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 import { colors, spacing, typography } from '../../theme';
 import { useAuth } from '../../context/AuthContext';
 import { useTracking } from '../../context/TrackingContext';
@@ -18,10 +21,10 @@ import {
 } from '../../utils/runMetrics';
 
 const DEFAULT_REGION = {
-    latitude: 48.8566,
-    longitude: 2.3522,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
+    latitude: 33.5731, // Casablanca default instead of Paris
+    longitude: -7.5898,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
 };
 
 export default function StartRunScreen() {
@@ -40,6 +43,20 @@ export default function StartRunScreen() {
     const route = trackingState?.routeCoordinates ?? [];
     const isRunning = trackingState?.isTracking ?? false;
     const lastCoordinate = route[route.length - 1] ?? null;
+
+    useEffect(() => {
+        // Center map on current location immediately on mount
+        (async () => {
+            try {
+                const { status } = await Location.requestForegroundPermissionsAsync();
+                if (status !== 'granted') return;
+                const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low });
+                if (mapRef.current && !lastCoordinate) {
+                    mapRef.current.animateToRegion(getMapRegionForCoordinate(loc.coords), 1000);
+                }
+            } catch (e) { console.warn(e); }
+        })();
+    }, []);
 
     useEffect(() => {
         if (!lastCoordinate || !mapRef.current) {
@@ -86,94 +103,123 @@ export default function StartRunScreen() {
 
     const currentRegion = getMapRegionForCoordinate(lastCoordinate) ?? DEFAULT_REGION;
 
+    // Heatmap segments calculation
+    const segments = [];
+    for (let i = 0; i < route.length - 1; i++) {
+        const speed = route[i].speedKmh ?? 0;
+        let color = '#ff4444'; // Red (slow)
+        if (speed > 8) color = '#ffbb33'; // Orange
+        if (speed > 12) color = '#00C851'; // Green (fast)
+
+        segments.push(
+            <Polyline
+                key={`segment-${i}`}
+                coordinates={[route[i], route[i + 1]]}
+                strokeColor={color}
+                strokeWidth={6}
+            />
+        );
+    }
+
+    // Ghost calculation (simple version: moves at PR avg pace)
+    const ghostPaceKmMin = 5.0; // Assume 12km/h for now, should fetch from PR
+    const ghostDistance = (trackingState?.durationSeconds ?? 0) * (ghostPaceKmMin / 3600) * 1000;
+
     return (
         <View style={styles.container}>
             <MapView
                 ref={mapRef}
                 provider={PROVIDER_GOOGLE}
                 style={styles.map}
-                initialRegion={currentRegion}
+                initialRegion={DEFAULT_REGION}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
             >
-                <Polyline coordinates={route} strokeColor={colors.primary} strokeWidth={4} />
+                {segments}
+
+                {lastCoordinate && (
+                    <Marker coordinate={lastCoordinate} title="Vous">
+                        <View style={styles.userMarker} />
+                    </Marker>
+                )}
+
+                {isRunning && (
+                    <Marker coordinate={route[0]} title="Ghost (PR)">
+                        <View style={styles.ghostMarker}>
+                            <Ionicons name="flash" size={16} color="#757575" />
+                        </View>
+                    </Marker>
+                )}
             </MapView>
 
+            <BlurView intensity={90} tint="dark" style={styles.topStats}>
+                <View style={styles.glassRow}>
+                    <View style={styles.glassBlock}>
+                        <Text style={styles.glassLabel}>ALLURE</Text>
+                        <Text style={styles.glassValue}>{formatDuration(trackingState?.currentPaceSecPerKm ?? 0)}</Text>
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.glassBlock}>
+                        <Text style={styles.glassLabel}>DISTANCE</Text>
+                        <Text style={styles.glassValue}>{formatDistance(trackingState?.distanceMeters ?? 0)}</Text>
+                    </View>
+                    <View style={styles.divider} />
+                    <View style={styles.glassBlock}>
+                        <Text style={styles.glassLabel}>KCAL</Text>
+                        <Text style={styles.glassValue}>
+                            {((1.036 * 75 * (trackingState?.distanceMeters ?? 0)) / 1000).toFixed(0)}
+                        </Text>
+                    </View>
+                </View>
+            </BlurView>
+
             <View style={styles.controlPanel}>
-                <ScrollView contentContainerStyle={styles.controlContent}>
-                    <Text style={styles.panelTitle}>Tracking de course</Text>
-                    <Text style={styles.panelSubtitle}>
-                        Utilisateur: {session?.email ?? 'non connecte'}
-                    </Text>
-
-                    <View style={styles.statsRow}>
-                        <View style={styles.statBlock}>
-                            <Text style={styles.statLabel}>Distance</Text>
-                            <Text style={styles.statValue}>
-                                {formatDistance(trackingState?.distanceMeters ?? 0)}
-                            </Text>
+                <BlurView intensity={90} tint="dark" style={styles.controlBlur}>
+                    <ScrollView contentContainerStyle={styles.controlContent}>
+                        <View style={styles.panelHeader}>
+                            <Text style={styles.panelTitle}>Session active</Text>
+                            {isRunning && (
+                                <View style={styles.liveIndicator}>
+                                    <View style={styles.pulseDot} />
+                                    <Text style={styles.liveText}>LIVE</Text>
+                                </View>
+                            )}
                         </View>
-                        <View style={styles.statBlock}>
-                            <Text style={styles.statLabel}>Temps</Text>
-                            <Text style={styles.statValue}>
-                                {formatDuration(trackingState?.durationSeconds ?? 0)}
-                            </Text>
+
+                        <View style={styles.statsRow}>
+                            <View style={styles.statBlock}>
+                                <Text style={styles.statLabel}>Temps</Text>
+                                <Text style={styles.statValue}>
+                                    {formatDuration(trackingState?.durationSeconds ?? 0)}
+                                </Text>
+                            </View>
+                            <View style={styles.statBlock}>
+                                <Text style={styles.statLabel}>Vitesse</Text>
+                                <Text style={styles.statValue}>
+                                    {(trackingState?.currentSpeedKmh ?? 0).toFixed(1)} km/h
+                                </Text>
+                            </View>
                         </View>
-                    </View>
 
-                    <View style={styles.statsRow}>
-                        <View style={styles.statBlock}>
-                            <Text style={styles.statLabel}>Vitesse</Text>
-                            <Text style={styles.statValue}>
-                                {(trackingState?.currentSpeedKmh ?? 0).toFixed(1)} km/h
+                        <TouchableOpacity
+                            style={[styles.button, isRunning ? styles.stopButton : styles.startButton]}
+                            onPress={handleToggleRun}
+                            disabled={isSubmitting || isLoading}
+                        >
+                            <Text style={styles.buttonText}>
+                                {isRunning ? 'Stopper la course' : 'Demarrer la course'}
                             </Text>
-                        </View>
-                        <View style={styles.statBlock}>
-                            <Text style={styles.statLabel}>Profil batterie</Text>
-                            <Text style={styles.statValue}>
-                                {trackingState?.activeProfile ?? 'balanced'}
-                            </Text>
-                        </View>
-                    </View>
+                        </TouchableOpacity>
 
-                    <View style={styles.statusCard}>
-                        <Text style={styles.statusText}>
-                            Etat: {isRunning ? 'tracking actif meme ecran verrouille' : 'pret'}
-                        </Text>
-                        <Text style={styles.statusText}>
-                            Points en attente: {trackingState?.pendingSyncCount ?? 0}
-                        </Text>
-                        <Text style={styles.statusText}>
-                            Derniere sync: {trackingState?.lastSyncAt ?? 'aucune'}
-                        </Text>
-                        {trackingState?.lastSyncError ? (
-                            <Text style={styles.errorText}>{trackingState.lastSyncError}</Text>
-                        ) : null}
-                    </View>
-
-                    <TouchableOpacity
-                        style={[styles.button, isRunning ? styles.stopButton : styles.startButton]}
-                        onPress={handleToggleRun}
-                        disabled={isSubmitting || isLoading}
-                    >
-                        <Text style={styles.buttonText}>
-                            {isRunning ? 'Stopper la course' : 'Demarrer la course'}
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[styles.button, styles.secondaryButton]}
-                        onPress={handleSyncNow}
-                        disabled={isSubmitting || isLoading}
-                    >
-                        <Text style={styles.buttonText}>Forcer la synchronisation</Text>
-                    </TouchableOpacity>
-
-                    <Text style={styles.helperText}>
-                        Necessite un build de developpement ou une app standalone pour le vrai
-                        background location.
-                    </Text>
-                </ScrollView>
+                        <TouchableOpacity
+                            style={[styles.button, styles.secondaryButton]}
+                            onPress={handleSyncNow}
+                            disabled={isSubmitting || isLoading}
+                        >
+                            <Text style={styles.buttonText}>Forcer la synchronisation</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                </BlurView>
             </View>
         </View>
     );
@@ -187,18 +233,36 @@ const styles = StyleSheet.create({
         bottom: spacing.large,
         left: spacing.large,
         right: spacing.large,
-        backgroundColor: colors.surface,
-        borderRadius: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.35,
-        shadowRadius: 10,
+        borderRadius: 24,
+        overflow: 'hidden',
         elevation: 8,
-        maxHeight: '55%',
+        maxHeight: '45%',
     },
+    controlBlur: { flex: 1 },
     controlContent: { padding: spacing.large },
-    panelTitle: { ...typography.heading, color: colors.text, marginBottom: 4 },
-    panelSubtitle: { color: colors.muted, marginBottom: spacing.medium },
+    topStats: {
+        position: 'absolute',
+        top: 50,
+        left: spacing.large,
+        right: spacing.large,
+        borderRadius: 20,
+        overflow: 'hidden',
+        padding: spacing.medium,
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.1)',
+    },
+    glassRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
+    glassBlock: { alignItems: 'center' },
+    glassLabel: { color: colors.muted, fontSize: 10, fontWeight: '700', letterSpacing: 1 },
+    glassValue: { color: colors.text, fontSize: 22, fontWeight: '800' },
+    divider: { width: 1, height: 30, backgroundColor: 'rgba(255,255,255,0.1)' },
+    panelHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.medium },
+    panelTitle: { ...typography.heading, color: colors.text },
+    liveIndicator: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,68,68,0.2)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12 },
+    pulseDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#ff4444', marginRight: 6 },
+    liveText: { color: '#ff4444', fontSize: 10, fontWeight: '900' },
+    userMarker: { width: 16, height: 16, borderRadius: 8, backgroundColor: colors.primary, borderWidth: 3, borderColor: '#fff' },
+    ghostMarker: { width: 30, height: 30, borderRadius: 15, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#fff' },
     statsRow: { flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: spacing.medium },
     statBlock: { alignItems: 'center', width: '45%' },
     statLabel: { color: colors.muted, fontSize: 14 },

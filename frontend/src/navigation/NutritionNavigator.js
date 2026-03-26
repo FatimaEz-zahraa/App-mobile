@@ -12,6 +12,7 @@ export default function NutritionNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        headerShown: false,
         headerStyle: { backgroundColor: colors.surface },
         headerTintColor: colors.text,
         tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
