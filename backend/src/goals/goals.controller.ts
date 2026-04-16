@@ -21,4 +21,9 @@ export class GoalsController {
   updateProgress(@Req() req, @Param('id') id: string, @Body('value') value: number) {
     return this.goalsService.updateProgress(req.user.userId, id, value);
   }
+
+  @Get('weekly-report')
+  getWeeklyReport(@Req() req) {
+    return this.goalsService.generateWeeklyReport(req.user.userId);
+  }
 }

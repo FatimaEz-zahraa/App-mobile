@@ -37,8 +37,8 @@ export default function LoginScreen({ navigation }) {
     };
 
     return (
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -75,12 +75,6 @@ export default function LoginScreen({ navigation }) {
                             <Text style={styles.buttonText}>Login</Text>
                         )}
                     </TouchableOpacity>
-
-                    <Text style={styles.helperText}>
-                        {FRONTEND_TEST_MODE
-                            ? 'Mode test front-end actif: connexion simulee localement.'
-                            : `API NestJS: ${API_BASE_URL}`}
-                    </Text>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                         <Text style={styles.linkText}>Create an account</Text>

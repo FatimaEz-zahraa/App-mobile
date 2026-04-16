@@ -26,4 +26,9 @@ export class NutritionController {
   getGoalAlerts(@Req() req) {
     return this.nutritionService.checkGoalAlerts(req.user.userId);
   }
+
+  @Post('log-quick')
+  logQuickMeal(@Req() req, @Body() data: { name: string, calories: number, mealType: string }) {
+    return this.nutritionService.logQuickMeal(req.user.userId, data as any);
+  }
 }

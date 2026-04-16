@@ -2,14 +2,15 @@ import React from 'react';
 import './src/services/tracking/trackingService';
 import AppNavigator from './src/navigation/AppNavigator';
 import { AuthProvider } from './src/context/AuthContext';
-import { TrackingProvider } from './src/context/TrackingContext';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <TrackingProvider>
+    <Provider store={store}>
+      <AuthProvider>
         <AppNavigator />
-      </TrackingProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </Provider>
   );
 }

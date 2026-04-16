@@ -29,7 +29,8 @@ export default function RegisterScreen({ navigation }) {
 
         try {
             await register({ name, email, password });
-            navigation.navigate('Login');
+            // After registration, direct to onboarding so user sets up their profile
+            navigation.navigate('Onboarding');
         } catch (registerError) {
             setError(registerError.message);
         } finally {
@@ -44,7 +45,8 @@ export default function RegisterScreen({ navigation }) {
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-                    <Text style={styles.title}>Register</Text>
+                    <Text style={styles.title}>Create Account</Text>
+                    <Text style={styles.subtitle}>Let's get you set up 🌿</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Name"
@@ -113,7 +115,8 @@ const styles = StyleSheet.create({
         paddingVertical: spacing.medium,
         alignItems: 'center',
     },
-    buttonText: { color: colors.text, fontWeight: '700', fontSize: 16 },
+    buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
     errorText: { color: colors.danger, marginBottom: spacing.medium, textAlign: 'center' },
-    linkText: { color: colors.secondary, textAlign: 'center', marginTop: spacing.medium },
+    linkText: { color: colors.primary, textAlign: 'center', marginTop: spacing.medium },
+    subtitle: { color: colors.muted, textAlign: 'center', fontSize: 15, marginBottom: spacing.large, marginTop: -12 },
 });

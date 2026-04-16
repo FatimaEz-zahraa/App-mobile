@@ -11,10 +11,22 @@ import { WorkoutModule } from './workout/workout.module';
 import { NutritionModule } from './nutrition/nutrition.module';
 import { GoalsModule } from './goals/goals.module';
 
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { WebsocketsModule } from './websockets/websockets.module';
+import { NotificationsModule } from './notifications/notifications.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     JwtModule.register({ global: true }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      autoLoadEntities: true,
+      synchronize: false, // Keep false as we are migrating from Prisma
+    }),
+    WebsocketsModule,
+    NotificationsModule,
     PrismaModule,
     AuthModule,
     UsersModule,

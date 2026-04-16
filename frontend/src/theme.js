@@ -1,20 +1,20 @@
 export const colors = {
-  background: '#05060A',
-  surface: '#0D0F14',
-  card: '#171A20',
-  text: '#F2F5F7',
-  muted: '#7B8A99',
-  primary: '#22C55E',
-  secondary: '#EF4444',
-  accent: '#22C55E',
-  danger: '#EF4444',
-  border: '#1F2937',
+  background: '#F7F8FA',
+  surface: '#FFFFFF',
+  card: '#FFFFFF',
+  text: '#1A1D23',
+  muted: '#8A93A2',
+  primary: '#4CAF82',    // muted sage green — calm & premium
+  secondary: '#E07B6A',  // soft coral for accents/danger
+  accent: '#4CAF82',
+  danger: '#E07B6A',
+  border: '#E8ECF0',
 };
 
 export const typography = {
-  heading: { fontSize: 24, fontWeight: '700' },
+  heading: { fontSize: 24, fontWeight: '700', letterSpacing: -0.5 },
   subtitle: { fontSize: 16, fontWeight: '600' },
-  body: { fontSize: 15, fontWeight: '500' },
+  body: { fontSize: 15, fontWeight: '400' },
 };
 
 export const spacing = {
@@ -23,3 +23,4 @@ export const spacing = {
   large: 24,
   xlarge: 32,
 };
+

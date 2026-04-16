@@ -67,8 +67,8 @@ export class NutritionService {
           calories: Math.round(target * 0.35), 
           suggestions: [
             'Poulet grillé (150g), riz complet (100g) et brocolis vapeur',
-            'Pavé de saumon au four, quinoa et asperges',
-            'Salade de pois chiches, avocat et thon'
+            'Salade marocaine (Zaâlouk) avec pain complet et blanc de poulet',
+            'Tajine de viande aux pruneaux (portion légère, peu de sauce)'
           ]
         },
         { 
@@ -76,7 +76,7 @@ export class NutritionService {
           calories: Math.round(target * 0.30), 
           suggestions: [
             'Dinde hachée revenue avec courgettes et poivrons',
-            'Steak de bœuf maigre, patate douce et haricots verts',
+            'Bol de Harira marocaine riche en légumineuses avec dattes',
             'Lentilles corail aux épices et riz basmati'
           ]
         },
@@ -134,5 +134,41 @@ export class NutritionService {
       alerts.push('Remember to drink water!');
     }
     return alerts;
+  }
+
+  async logQuickMeal(userId: string, data: { name: string, calories: number, mealType: any }) {
+    // Frictionless fast logging
+    const log = await this.prisma.meal.create({
+      data: {
+        userId,
+        name: data.name,
+        mealType: data.mealType,
+        loggedAt: new Date()
+      }
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const nutritionLog = await this.prisma.nutritionLog.findFirst({
+      where: { userId, logDate: { gte: today } },
+    });
+
+    if (nutritionLog) {
+      await this.prisma.nutritionLog.update({
+        where: { id: nutritionLog.id },
+        data: { totalCalories: Number(nutritionLog.totalCalories || 0) + data.calories }
+      });
+    } else {
+      await this.prisma.nutritionLog.create({
+        data: {
+          userId,
+          logDate: new Date(),
+          totalCalories: data.calories
+        }
+      });
+    }
+
+    return { success: true, message: 'Meal logged quickly!', meal: log };
   }
 }

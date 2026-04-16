@@ -5,6 +5,7 @@ import { colors } from '../theme';
 
 import FitnessHomeScreen from '../screens/fitness/FitnessHomeScreen';
 import CreateProgramScreen from '../screens/fitness/CreateProgramScreen';
+import SmartWorkoutGeneratorScreen from '../screens/fitness/SmartWorkoutGeneratorScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,12 +23,14 @@ export default function FitnessNavigator() {
           const icons = {
             Home: 'fitness-center',
             Create: 'playlist-add',
+            Smart: 'flash-on',
           };
           return <MaterialIcons name={icons[route.name]} size={size} color={color} />;
         },
       })}
     >
       <Tab.Screen name="Home" component={FitnessHomeScreen} options={{ title: 'Programs' }} />
+      <Tab.Screen name="Smart" component={SmartWorkoutGeneratorScreen} options={{ title: 'AI Workout' }} />
       <Tab.Screen name="Create" component={CreateProgramScreen} options={{ title: 'Create' }} />
     </Tab.Navigator>
   );

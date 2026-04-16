@@ -21,4 +21,14 @@ export class WorkoutController {
   createProgram(@Req() req, @Body() data: any) {
     return this.workoutService.createProgram(req.user.userId, data);
   }
+
+  @Post('smart-generate')
+  generateSmartWorkout(@Req() req, @Body() data: { energyLevel: string, durationMin: number }) {
+    return this.workoutService.generateSmartWorkout(req.user.userId, data.energyLevel, data.durationMin);
+  }
+
+  @Post(':sessionId/reschedule')
+  rescheduleMissedWorkout(@Req() req, @Param('sessionId') sessionId: string) {
+    return this.workoutService.rescheduleMissedWorkout(req.user.userId, sessionId);
+  }
 }

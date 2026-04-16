@@ -1,20 +1,24 @@
 import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import AuthNavigator from './AuthNavigator';
-import MainNavigator from './MainNavigator';
-import FitnessNavigator from './FitnessNavigator';
-import NutritionNavigator from './NutritionNavigator';
+import { TrackingProvider } from '../context/TrackingContext';
+import HomeScreen from '../screens/home/HomeScreen';
+
+// Lazy load heavy navigators
+const MainNavigator = React.lazy(() => import('./MainNavigator'));
+const FitnessNavigator = React.lazy(() => import('./FitnessNavigator'));
+const NutritionNavigator = React.lazy(() => import('./NutritionNavigator'));
 import { colors } from '../theme';
 import { useAuth } from '../context/AuthContext';
 
 const Drawer = createDrawerNavigator();
 
 const AppTheme = {
-    ...DarkTheme,
+    ...DefaultTheme,
     colors: {
-        ...DarkTheme.colors,
+        ...DefaultTheme.colors,
         background: colors.background,
         card: colors.surface,
         text: colors.text,
@@ -45,25 +49,46 @@ export default function AppNavigator() {
     }
 
     return (
-        <NavigationContainer theme={AppTheme}>
-            {isAuthenticated ? (
-                <Drawer.Navigator
-                    initialRouteName="Run"
-                    screenOptions={{
-                        headerStyle: { backgroundColor: colors.surface },
-                        headerTintColor: colors.text,
-                        drawerStyle: { backgroundColor: colors.surface },
-                        drawerActiveTintColor: colors.primary,
-                        drawerInactiveTintColor: colors.muted,
-                    }}
-                >
-                    <Drawer.Screen name="Run" component={MainNavigator} />
-                    <Drawer.Screen name="Fitness" component={FitnessNavigator} />
-                    <Drawer.Screen name="Nutrition" component={NutritionNavigator} />
-                </Drawer.Navigator>
-            ) : (
-                <AuthNavigator />
-            )}
-        </NavigationContainer>
+        <TrackingProvider>
+            <NavigationContainer theme={AppTheme}>
+                {isAuthenticated ? (
+                    <Drawer.Navigator
+                        initialRouteName="Home"
+                        screenOptions={{
+                            headerStyle: { backgroundColor: colors.surface },
+                            headerTintColor: colors.text,
+                            drawerStyle: { backgroundColor: colors.surface },
+                            drawerActiveTintColor: colors.primary,
+                            drawerInactiveTintColor: colors.muted,
+                        }}
+                    >
+                        <Drawer.Screen name="Home" component={HomeScreen} />
+                        <Drawer.Screen name="Run">
+                            {props => (
+                                <React.Suspense fallback={<ActivityIndicator size="large" color={colors.primary} style={{flex: 1, backgroundColor: colors.background}} />}>
+                                    <MainNavigator {...props} />
+                                </React.Suspense>
+                            )}
+                        </Drawer.Screen>
+                        <Drawer.Screen name="Fitness">
+                            {props => (
+                                <React.Suspense fallback={<ActivityIndicator size="large" color={colors.primary} style={{flex: 1, backgroundColor: colors.background}} />}>
+                                    <FitnessNavigator {...props} />
+                                </React.Suspense>
+                            )}
+                        </Drawer.Screen>
+                        <Drawer.Screen name="Nutrition">
+                            {props => (
+                                <React.Suspense fallback={<ActivityIndicator size="large" color={colors.primary} style={{flex: 1, backgroundColor: colors.background}} />}>
+                                    <NutritionNavigator {...props} />
+                                </React.Suspense>
+                            )}
+                        </Drawer.Screen>
+                    </Drawer.Navigator>
+                ) : (
+                    <AuthNavigator />
+                )}
+            </NavigationContainer>
+        </TrackingProvider>
     );
 }

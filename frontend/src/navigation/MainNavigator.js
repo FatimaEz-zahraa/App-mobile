@@ -5,6 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import StartRunScreen from '../screens/run/StartRunScreen.js';
 import StatsScreen from '../screens/stats/StatsScreen';
+import WeeklyPerformanceReportScreen from '../screens/stats/WeeklyPerformanceReportScreen';
 import HistoryScreen from '../screens/history/HistoryScreen';
 import RunDetailsScreen from '../screens/history/RunDetailsScreen';
 import { colors } from '../theme';
@@ -42,6 +43,7 @@ export default function MainNavigator() {
                     const icons = {
                         StartRun: 'directions-run',
                         Stats: 'show-chart',
+                        Weekly: 'insert-chart-outlined',
                         History: 'history',
                     };
                     return <MaterialIcons name={icons[route.name]} size={size} color={color} />;
@@ -50,6 +52,7 @@ export default function MainNavigator() {
         >
             <Tab.Screen name="StartRun" component={StartRunScreen} options={{ title: 'Run' }} />
             <Tab.Screen name="Stats" component={StatsScreen} options={{ title: 'Stats' }} />
+            <Tab.Screen name="Weekly" component={WeeklyPerformanceReportScreen} options={{ title: 'Report' }} />
             <Tab.Screen name="History" component={HistoryNavigator} options={{ title: 'History' }} />
         </Tab.Navigator>
     );

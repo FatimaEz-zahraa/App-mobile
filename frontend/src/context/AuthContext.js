@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import {
     AUTH_LOGIN_ENDPOINT,
     AUTH_REGISTER_ENDPOINT,
@@ -40,7 +41,23 @@ export function AuthProvider({ children }) {
 
         async function bootstrapSession() {
             try {
-                const savedSession = await loadAuthSession();
+                let savedSession = await loadAuthSession();
+                
+                if (savedSession?.token) {
+                    try {
+                        const decoded = jwtDecode(savedSession.token);
+                        const currentTime = Date.now() / 1000;
+                        if (decoded.exp && decoded.exp < currentTime) {
+                            console.log("JWT Expired. Clearing session.");
+                            await clearAuthSession();
+                            savedSession = null;
+                        }
+                    } catch (e) {
+                         console.warn("Invalid JWT format", e);
+                         await clearAuthSession();
+                         savedSession = null;
+                    }
+                }
 
                 if (isMounted) {
                     setSession(savedSession);
